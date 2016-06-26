@@ -2,7 +2,11 @@
 #include <string>
 #include <sstream>
 #include "Menu.h"
-enum Command_States { Initial, Tree, Heap, AVLTree, Done };
+#include "LinkedTree.h"
+#include "Heap.h"
+#include "AVLTree.h"
+
+enum Command_States { Initial, _Tree, _Heap, _AVLTree, Done };
 using namespace std;
 
 class CommandProcessor

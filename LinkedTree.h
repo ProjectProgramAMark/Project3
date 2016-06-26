@@ -5,7 +5,7 @@ using namespace std;
 
 template <class Type> class LinkedTree {
 private:
-    TreeNode *node;
+    TreeNode<Type> *node;
 public:
     LinkedTree() {
         cout << "Constructor activated" << endl;
@@ -54,7 +54,7 @@ public:
         return node;
     }
 
-    TreeNode *find(int key, Type data) {
+    TreeNode<Type> *find(int key, Type data) {
         cout << "Find node implemented" << endl;
         return node;
 

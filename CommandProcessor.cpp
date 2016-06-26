@@ -1,17 +1,14 @@
 #include <iostream>
 #include "CommandProcessor.h"
-#include "LinkedTree.h"
-#include "Heap.h"
-#include "AVLTree.h"
 
 using namespace std;
 
 Command_States CommandProcessor:: command_state = Initial;
 Menu* CommandProcessor::menus[NR_CMD_STATES];
 
-LinkedTree<double> *linkedTree = new LinkedTree();
-AVLTree<double> *avlTree = new AVLTree();
-Heap<double> *heap = new Heap();
+LinkedTree<double> *linkedTree = new LinkedTree<double>();
+AVLTree<double> *avlTree = new AVLTree<double>();
+Heap<double> *heap = new Heap<double>();
 
 void CommandProcessor::Process_Commands()
 {
@@ -29,13 +26,13 @@ void CommandProcessor::Process_Commands()
             case Initial:   Process_Initial_Cmd(*cmd);
                 break;
 
-            case Tree: ProcessTree(*cmd);
+            case _Tree: ProcessTree(*cmd);
                 break;
 
-            case Heap: ProcessHeap(*cmd);
+            case _Heap: ProcessHeap(*cmd);
                 break;
 
-            case AVLTree: ProcessAVLTree(*cmd);
+            case _AVLTree: ProcessAVLTree(*cmd);
                 break;
 
             case Done:  break;      // Can't happen
@@ -49,11 +46,11 @@ void CommandProcessor::Process_Commands()
 void CommandProcessor::Process_Initial_Cmd(const string& cmd)
 {
     if (cmd == "Tree") {
-        command_state = Tree;
+        command_state = _Tree;
     }else if (cmd == "Heap") {
-        command_state = Heap;
+        command_state = _Heap;
     }else if(cmd == "AVLTree") {
-        command_state = AVLTree;
+        command_state = _AVLTree;
     } else {
         cout << "Quit command\n";
         command_state = Done;
@@ -256,7 +253,7 @@ void CommandProcessor::Create_Menus()
     menu->Add_Command("Insert");
     menu->Add_Command("Delete");
     menu->Add_Command("Exit");
-    menus[Tree] = menu;
+    menus[_Tree] = menu;
 
     //Menu for Heap
     menu = new Menu("Enter command number:\n");
@@ -274,7 +271,7 @@ void CommandProcessor::Create_Menus()
     menu->Add_Command("Print List");
     menu->Add_Command("Delete List");
     menu->Add_Command("Exit");
-    menus[Heap] = menu;
+    menus[_Heap] = menu;
 
     //Menu for AVLTree
     menu = new Menu("Enter command number:\n");
@@ -295,5 +292,5 @@ void CommandProcessor::Create_Menus()
     menu->Add_Command("Insert");
     menu->Add_Command("Delete");
     menu->Add_Command("Exit");
-    menus[AVLTree] = menu;
+    menus[_AVLTree] = menu;
 }

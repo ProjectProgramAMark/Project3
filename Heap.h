@@ -1,7 +1,7 @@
 #pragma once
 #include "TreeNode.h"
 
-template <class HeapType> class Heap {
+template <class Type> class Heap {
 private:
-    TreeNode node;
+    TreeNode<Type> node;
 };

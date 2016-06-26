@@ -1,7 +1,5 @@
 #pragma once
 
-
-
 template<class Type>class TreeNode {
 private:
     int key;

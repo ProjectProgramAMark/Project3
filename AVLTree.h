@@ -49,7 +49,7 @@ public:
         return 1;
 
     }
-    TreeNode *find(int key, Type data) {
+    TreeNode<Type> *find(int key, Type data) {
         cout << "Find node implemented" << endl;
         return node;
 
