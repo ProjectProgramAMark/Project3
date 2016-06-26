@@ -24,12 +24,12 @@ public:
         cout << "Get Height implemented" << endl;
         return 1;
     }
-    int getHeight(TreeNode node) {
+    int getHeight(TreeNode<Type> node) {
         cout << "Get Height of specific node implemented" << endl;
         return 1;
 
     }
-    int getDepth(TreeNode node) {
+    int getDepth(TreeNode<Type> node) {
         cout << "Get Depth of specific node implemented" << endl;
         return 1;
 
@@ -44,7 +44,7 @@ public:
         return 1;
 
     }
-    int siblings(TreeNode node) {
+    int siblings(TreeNode<Type> node) {
         cout << "Get Siblings implemented" << endl;
         return 1;
 

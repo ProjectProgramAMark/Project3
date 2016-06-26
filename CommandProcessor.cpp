@@ -1,13 +1,17 @@
 #include <iostream>
 #include "CommandProcessor.h"
+#include "LinkedTree.h"
+#include "Heap.h"
+#include "AVLTree.h"
+
 using namespace std;
 
 Command_States CommandProcessor:: command_state = Initial;
-
 Menu* CommandProcessor::menus[NR_CMD_STATES];
 
-
-
+LinkedTree<double> *linkedTree = new LinkedTree();
+AVLTree<double> *avlTree = new AVLTree();
+Heap<double> *heap = new Heap();
 
 void CommandProcessor::Process_Commands()
 {
@@ -234,19 +238,23 @@ void CommandProcessor::Create_Menus()
 
     //Menu for Tree
     menu = new Menu("Enter command number:\n");
-    menu->Add_Command("Add Node to Front");
-    menu->Add_Command("Add Node to Back");
-    menu->Add_Command("Delete Node at Front");
-    menu->Add_Command("Delete Value");
-    menu->Add_Command("Is List Empty");
-    menu->Add_Command("Get Front Node");
-    menu->Add_Command("Get Back Node");
-    menu->Add_Command("Get Head Pointer ;)");
-    menu->Add_Command("Get Tail Pointer");
-    menu->Add_Command("Get Size of List");
-     menu->Add_Command("Get Count");
-    menu->Add_Command("Print List");
-    menu->Add_Command("Delete List");
+    menu->Add_Command("Get Root");
+    menu->Add_Command("Get Size");
+    menu->Add_Command("Get Height");
+    menu->Add_Command("Get Depth");
+    menu->Add_Command("Is Empty");
+    menu->Add_Command("Get Leaves");
+    menu->Add_Command("Get Siblings");
+    menu->Add_Command("Find Common Ancestor");
+    menu->Add_Command("Find Tree Node");
+    menu->Add_Command("Preorder");
+    menu->Add_Command("Postorder");
+    menu->Add_Command("Levelorder");
+    menu->Add_Command("Inorder");
+    menu->Add_Command("Build Tree");
+    menu->Add_Command("Clear");
+    menu->Add_Command("Insert");
+    menu->Add_Command("Delete");
     menu->Add_Command("Exit");
     menus[Tree] = menu;
 
@@ -270,19 +278,22 @@ void CommandProcessor::Create_Menus()
 
     //Menu for AVLTree
     menu = new Menu("Enter command number:\n");
-    menu->Add_Command("Add Node to Front");
-    menu->Add_Command("Add Node to Back");
-    menu->Add_Command("Delete Node at Front");
-    menu->Add_Command("Delete Value");
-    menu->Add_Command("Is List Empty");
-    menu->Add_Command("Get Front Node");
-    menu->Add_Command("Get Back Node");
-    menu->Add_Command("Get Head Pointer ;)");
-    menu->Add_Command("Get Tail Pointer");
-    menu->Add_Command("Get Size of List");
-    menu->Add_Command("Get Count");
-    menu->Add_Command("Print List");
-    menu->Add_Command("Delete List");
+    menu->Add_Command("Get Root");
+    menu->Add_Command("Get Size");
+    menu->Add_Command("Get Height");
+    menu->Add_Command("Get Depth");
+    menu->Add_Command("Is Empty");
+    menu->Add_Command("Get Leaves");
+    menu->Add_Command("Get Siblings");
+    menu->Add_Command("Find Tree Node");
+    menu->Add_Command("Preorder");
+    menu->Add_Command("Postorder");
+    menu->Add_Command("Levelorder");
+    menu->Add_Command("Inorder");
+    menu->Add_Command("Build Tree");
+    menu->Add_Command("Clear");
+    menu->Add_Command("Insert");
+    menu->Add_Command("Delete");
     menu->Add_Command("Exit");
     menus[AVLTree] = menu;
 }

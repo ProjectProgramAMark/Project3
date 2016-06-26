@@ -27,7 +27,6 @@ public:
         this->value = value;
     }
 
-
     TreeNode *getParent() const {
         return parent;
     }
