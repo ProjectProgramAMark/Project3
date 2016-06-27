@@ -9,6 +9,11 @@ private:
 
 public:
 
+    TreeNode(Type value) {
+        cout << "Constructor activated" << endl;
+        this->value = value;
+    }
+
     int getKey() const {
         return key;
     }

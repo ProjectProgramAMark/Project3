@@ -3,10 +3,10 @@
 #include <sstream>
 #include "Menu.h"
 #include "LinkedTree.h"
-#include "Heap.h"
+//#include "Heap.h"
 #include "AVLTree.h"
 
-enum Command_States { Initial, _Tree, _Heap, _AVLTree, Done };
+enum Command_States { Initial, _Tree, _AVLTree, Done };
 using namespace std;
 
 class CommandProcessor
@@ -22,7 +22,7 @@ private:
     static void Create_Menus();
     static void Process_Initial_Cmd(const string& cmd);
     static void ProcessTree(const string& cmd);
-    static void ProcessHeap(const string& cmd);
+//    static void ProcessHeap(const string& cmd);
     static void ProcessAVLTree(const string& cmd);
 
 

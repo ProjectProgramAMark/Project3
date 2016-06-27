@@ -24,12 +24,12 @@ public:
         cout << "Get Height implemented" << endl;
         return 1;
     }
-    int getHeight(TreeNode<Type> node) {
+    int getHeight(TreeNode<Type> *node) {
         cout << "Get Height of specific node implemented" << endl;
         return 1;
 
     }
-    int getDepth(TreeNode<Type> node) {
+    int getDepth(TreeNode<Type> *node) {
         cout << "Get Depth of specific node implemented" << endl;
         return 1;
 
@@ -44,7 +44,7 @@ public:
         return 1;
 
     }
-    int siblings(TreeNode<Type> node) {
+    int siblings(TreeNode<Type> *node) {
         cout << "Get Siblings implemented" << endl;
         return 1;
 
@@ -82,12 +82,12 @@ public:
     }
 
     // Can use as many parameters as we need here
-    void insert(TreeNode<Type> data) {
+    void insert(TreeNode<Type> *data) {
         cout << "Insert implemented" << endl;
 
     }
 
-    void del(TreeNode<Type> data) {
+    void del(TreeNode<Type> *data) {
         cout << "Delete implemented" << endl;
     }
 };
