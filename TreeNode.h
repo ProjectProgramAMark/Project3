@@ -10,7 +10,6 @@ private:
     TreeNode *left;
     TreeNode *right;
 public:
-
     TreeNode(string treeType, int key, Type value) {
         cout << "Constructor activated" << endl;
         if(treeType == "General"){
@@ -40,19 +39,19 @@ public:
         cout << "Constructor activated" << endl;
         if(treeType == "General"){
             this->key = key;
-            this->value = nullptr;
+            this->value = 0;
             this->children = nullptr;
             this->sibling = nullptr;
         }
         else if(treeType == "Heap"){
             this->key = key;
-            this->value = nullptr;
+            this->value = 0;
             this->left = nullptr;
             this->right = nullptr;
         }
         else if(treeType == "AVL"){
             this->key = key;
-            this->value = nullptr;
+            this->value = 0;
             this->left = nullptr;
             this->right = nullptr;
         }
@@ -64,20 +63,20 @@ public:
     TreeNode(string treeType, Type value) {
         cout << "Constructor activated" << endl;
         if(treeType == "General"){
-            this->key = nullptr;
-            this->value = nullptr;
+            this->key = 0;
+            this->value = value;
             this->children = nullptr;
             this->sibling = nullptr;
         }
         else if(treeType == "Heap"){
-            this->key = nullptr;
-            this->value = nullptr;
+            this->key = 0;
+            this->value = value;
             this->left = nullptr;
             this->right = nullptr;
         }
         else if(treeType == "AVL"){
-            this->key = nullptr;
-            this->value = nullptr;
+            this->key = 0;
+            this->value = value;
             this->left = nullptr;
             this->right = nullptr;
         }
