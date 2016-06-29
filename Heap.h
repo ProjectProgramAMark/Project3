@@ -34,8 +34,17 @@ public:
 
     void insert(int key, Type & data) {
         if(numElements == capacity - 1){
-            doubleSize();
+            doubleSize(); // create function
         }
+        else{
+            node = new TreeNode("Heap", key, data);
+            array[numElements] = node;
+            Heapify(numElements); //create function
+        }
+    }
+
+    void Heapify(int nodeIndex){
+
     }
     void delMax() {}
 };
