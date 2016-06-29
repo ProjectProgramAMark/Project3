@@ -2,7 +2,7 @@
 #include <string>
 #include <sstream>
 #include "Menu.h"
-#include "LinkedTree.h"
+#include "GeneralTree.h"
 //#include "Heap.h"
 #include "AVLTree.h"
 

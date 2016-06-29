@@ -6,7 +6,7 @@ using namespace std;
 Command_States CommandProcessor:: command_state = Initial;
 Menu* CommandProcessor::menus[NR_CMD_STATES];
 
-LinkedTree<double> *linkedTree = new LinkedTree<double>();
+GeneralTree<double> *linkedTree = new GeneralTree<double>();
 AVLTree<double> *avlTree = new AVLTree<double>();
 //Heap<double> *heap = new Heap<double>();
 
@@ -72,7 +72,7 @@ void CommandProcessor::ProcessTree(const string &cmd) {
         cout << "Which node to calculate depth?" << endl;
         getline(cin,input);
         stringstream(input) >> value;
-        TreeNode<double> *node = new TreeNode<double>(value);
+        TreeNode<double> *node = new TreeNode<double>("General", value);
         linkedTree->getDepth(node);
     }else if(cmd == "Is Empty") {
         linkedTree->empty();
@@ -84,7 +84,7 @@ void CommandProcessor::ProcessTree(const string &cmd) {
         cout << "Which node to get siblings for?" << endl;
         getline(cin,input);
         stringstream(input) >> value;
-        TreeNode<double> *node = new TreeNode<double>(value);
+        TreeNode<double> *node = new TreeNode<double>("General", value);
         linkedTree->siblings(node);
     }else if(cmd == "Find Common Ancestor") {
         string input;
@@ -93,12 +93,12 @@ void CommandProcessor::ProcessTree(const string &cmd) {
         cout << "Please enter node 1 for common ancestor" << endl;
         getline(cin,input);
         stringstream(input) >> value;
-        TreeNode<double> *node1 = new TreeNode<double>(value);
+        TreeNode<double> *node1 = new TreeNode<double>("General", value);
         getline(cin, trash);
         cout << "Please enter node 2 for common ancestor" << endl;
         getline(cin,input);
         stringstream(input) >> value;
-        TreeNode<double> * node2 = new TreeNode<double>(value);
+        TreeNode<double> * node2 = new TreeNode<double>("General", value);
         linkedTree->findCommonAncestor(node1, node2);
     }else if(cmd == "Find Tree Node") {
         string input;
@@ -112,7 +112,7 @@ void CommandProcessor::ProcessTree(const string &cmd) {
         cout << "Data for node" << endl;
         getline(cin, input);
         stringstream(input) >> data;
-        linkedTree->findNode(key, data);
+        linkedTree->findNode(key);
     }else if(cmd == "Preorder"){
         linkedTree->preorder();
     }else if(cmd == "Postorder"){
@@ -129,7 +129,7 @@ void CommandProcessor::ProcessTree(const string &cmd) {
         cout << "What data do you want the TreeNode to have?" << endl;
         getline(cin, input);
         stringstream(input) >> data;
-        TreeNode<double> *node = new TreeNode<double>(data);
+        TreeNode<double> *node = new TreeNode<double>("General", data);
         linkedTree->insert(node);
     }else if(cmd == "Delete") {
         string input;
@@ -137,7 +137,7 @@ void CommandProcessor::ProcessTree(const string &cmd) {
         cout << "What data does the TreeNode you want to delete have?" << endl;
         getline(cin, input);
         stringstream(input) >> data;
-        TreeNode<double> *node = new TreeNode<double>(data);
+        TreeNode<double> *node = new TreeNode<double>("General", data);
         linkedTree->del(node);
     }else if(cmd == "Exit"){
         exit(0);
@@ -215,7 +215,7 @@ void CommandProcessor::ProcessAVLTree(const string &cmd) {
         cout << "Which node to calculate depth?" << endl;
         getline(cin,input);
         stringstream(input) >> value;
-        TreeNode<double> *node = new TreeNode<double>(value);
+        TreeNode<double> *node = new TreeNode<double>("AVL", value);
         avlTree->getDepth(node);
     }else if(cmd == "Is Empty") {
         avlTree->empty();
@@ -227,7 +227,7 @@ void CommandProcessor::ProcessAVLTree(const string &cmd) {
         cout << "Which node to get siblings for?" << endl;
         getline(cin,input);
         stringstream(input) >> value;
-        TreeNode<double> *node = new TreeNode<double>(value);
+        TreeNode<double> *node = new TreeNode<double>("AVL", value);
         avlTree->siblings(node);
     }else if(cmd == "Preorder"){
         avlTree->preorder();
@@ -245,7 +245,7 @@ void CommandProcessor::ProcessAVLTree(const string &cmd) {
         cout << "What data do you want the TreeNode to have?" << endl;
         getline(cin, input);
         stringstream(input) >> data;
-        TreeNode<double> *node = new TreeNode<double>(data);
+        TreeNode<double> *node = new TreeNode<double>("AVL", data);
         avlTree->insert(node);
     }else if(cmd == "Delete") {
         string input;
@@ -253,7 +253,7 @@ void CommandProcessor::ProcessAVLTree(const string &cmd) {
         cout << "What data does the TreeNode you want to delete have?" << endl;
         getline(cin, input);
         stringstream(input) >> data;
-        TreeNode<double> *node = new TreeNode<double>(data);
+        TreeNode<double> *node = new TreeNode<double>("AVL", data);
         avlTree->del(node);
     }else if(cmd == "Exit"){
         exit(0);

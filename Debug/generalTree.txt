@@ -1,0 +1,13 @@
+data_structures 0
+hws 0.0
+projects 0.1
+quizzes 0.2
+exams 0.3
+hw1 0.0.0
+p1 0.1.0
+p2 0.1.1
+q1 0.2.0
+q2 0.2.1
+q3 0.2.2
+q4 0.2.3
+final_exam 0.3.0

@@ -9,8 +9,6 @@ private:
     TreeNode *sibling;
     TreeNode *left;
     TreeNode *right;
-    string treeType;
-
 public:
 
     TreeNode(string treeType, int key, Type value) {
@@ -37,6 +35,57 @@ public:
             cout << "Node could not be created. Try again." << endl;
         }
     }
+
+    TreeNode(string treeType, int key) {
+        cout << "Constructor activated" << endl;
+        if(treeType == "General"){
+            this->key = key;
+            this->value = nullptr;
+            this->children = nullptr;
+            this->sibling = nullptr;
+        }
+        else if(treeType == "Heap"){
+            this->key = key;
+            this->value = nullptr;
+            this->left = nullptr;
+            this->right = nullptr;
+        }
+        else if(treeType == "AVL"){
+            this->key = key;
+            this->value = nullptr;
+            this->left = nullptr;
+            this->right = nullptr;
+        }
+        else{
+            cout << "Node could not be created. Try again." << endl;
+        }
+    }
+
+    TreeNode(string treeType, Type value) {
+        cout << "Constructor activated" << endl;
+        if(treeType == "General"){
+            this->key = nullptr;
+            this->value = nullptr;
+            this->children = nullptr;
+            this->sibling = nullptr;
+        }
+        else if(treeType == "Heap"){
+            this->key = nullptr;
+            this->value = nullptr;
+            this->left = nullptr;
+            this->right = nullptr;
+        }
+        else if(treeType == "AVL"){
+            this->key = nullptr;
+            this->value = nullptr;
+            this->left = nullptr;
+            this->right = nullptr;
+        }
+        else{
+            cout << "Node could not be created. Try again." << endl;
+        }
+    }
+
 
     int getKey() const {
         return key;
