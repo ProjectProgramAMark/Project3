@@ -1,12 +1,16 @@
 #pragma once
 #include "TreeNode.h"
 
+#define PARENT(i)  (i/2)
+#define LEFT(nodeIndex) 2(nodeIndex) //index starts at 1
+#define RIGHT(nodeIndex) 2(nodeIndex)+1
+
 const INITIAL_CAP = 8;
+
 
 template <class Type> class Heap {
 private:
     TreeNode<Type> node;
-    TreeNode<Type> root;
     Type * array;
     int numElements;
     int capacity;
@@ -23,7 +27,7 @@ public:
         delete [] array;
     }
 
-    TreeNode<Type> getMax(){ return root; }
+    TreeNode<Type> getMax(){ return array[0]; }
     int getSize(){ return numElements; }
     int getHeight(){ return height; }
     bool empty(){ return numElements == 0; }
@@ -38,13 +42,23 @@ public:
         }
         else{
             node = new TreeNode("Heap", key, data);
+            numElements++;
             array[numElements] = node;
             Heapify(numElements); //create function
         }
     }
 
     void Heapify(int nodeIndex){
+        while(nodeIndex > 1 && array[PARENT(nodeIndex)]->key < array[nodeIndex]->key) {
 
+            TreeNode * tmp = array[PARENT(nodeIndex)];
+
+            array[PARENT(nodeIndex)] = array[nodeIndex];
+
+            array[nodeIndex] = tmp;
+
+            nodeIndex = PARENT(nodeIndex);
+        }
     }
     void delMax() {}
 };

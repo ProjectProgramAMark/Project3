@@ -69,4 +69,20 @@ public:
     void setChildren(TreeNode *children) {
         this->children = children;
     }
+
+    TreeNode *getSibling() const {
+        return sibling;
+    }
+
+    void setSibling(TreeNode *sibling) {
+        this->sibling = sibling;
+    }
+
+    TreeNode *getLeft() const {
+        return left;
+    }
+
+    TreeNode *getRight() const {
+        return right;
+    }
 };
