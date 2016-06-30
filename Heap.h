@@ -2,32 +2,37 @@
 #include "TreeNode.h"
 
 #define PARENT(i)  (i/2)
-//#define LEFT(nodeIndex) 2(nodeIndex) //index starts at 1
-//#define RIGHT(nodeIndex) 2(nodeIndex)+1
 
-const INITIAL_CAP = 8;
+#define LEFT(i)  (2*i) //index starts at 1
+
+#define RIGHT(i)  (2*i)+1
+
+const int INITIAL_CAP = 8;
 
 
 template <class Type> class Heap {
 private:
     TreeNode<Type> * node;
-    Type ** array;
+    TreeNode<Type> ** array;
     int numElements;
     int capacity;
     int height;
 
 public:
     Heap(){
-        array = new Type[INITIAL_CAP];
+        array = new TreeNode<Type>*[INITIAL_CAP];
         numElements = 0;
         capacity = INITIAL_CAP;
+        for(int i=0; i < capacity; i++){
+            array[i] = new TreeNode<Type>("Heap", 0, "");
+        }
     }
 
     ~Heap(){
         delete [] array;
     }
 
-    TreeNode<Type> getMax(){ return array[0]; }
+    TreeNode<Type>* getMax(){ return array[1]; }
     int getSize(){ return numElements; }
     int getHeight(){ return height; }
     bool empty(){ return numElements == 0; }
@@ -36,29 +41,49 @@ public:
     void buildTree() {}
     void clear() {}
 
+    void doubleSize() {
+        capacity = capacity*2;
+        TreeNode<Type> **tmp = new TreeNode<Type>*[capacity];
+        for(int i=0; i < capacity; i++){
+            tmp[i] = new TreeNode<Type>("Heap", 0, "");
+        }
+        for(int i = 0; i < numElements; i++){
+            tmp[i] = array[i];
+        }
+        *array = *tmp;
+        delete [] tmp;
+    }
+
     void insert(int key, Type & data) {
         if(numElements == capacity - 1){
-//            doubleSize(); // create function
+            doubleSize(); // create function
         }
-        else{
-            node = new TreeNode("Heap", key, data);
-            numElements++;
-            array[numElements] = node;
-            Heapify(numElements); //create function
-        }
+        node = new TreeNode<Type>("Heap", key, data);
+        numElements++;
+        array[numElements] = node;
+        Heapify(numElements); //create function
     }
 
     void Heapify(int nodeIndex){
-        while(nodeIndex > 1 && array[PARENT(nodeIndex)]->key < array[nodeIndex]->key) {
+        while(nodeIndex > 1 && array[PARENT(nodeIndex)]->getKey() < array[nodeIndex]->getKey()) {
 
-            TreeNode * tmp = array[PARENT(nodeIndex)];
-
+            TreeNode<Type> * tmp = array[PARENT(nodeIndex)];
             array[PARENT(nodeIndex)] = array[nodeIndex];
-
             array[nodeIndex] = tmp;
+
+            if(nodeIndex > 2 && array[LEFT(nodeIndex)]->getKey() > array[RIGHT(nodeIndex)]->getKey()) {
+                TreeNode<Type> * tmp = array[LEFT(nodeIndex)];
+            }
 
             nodeIndex = PARENT(nodeIndex);
         }
     }
-    void delMax() {}
+    void delMax() {
+
+    }
+    void Display() {
+        for(int i = 1; i <= numElements; i++){
+            cout << "Key: " << array[i]->getKey() << " Value: " << array[i]->getValue() << endl;
+        }
+    }
 };

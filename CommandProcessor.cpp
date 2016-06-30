@@ -60,7 +60,7 @@ void CommandProcessor::Process_Initial_Cmd(const string& cmd)
 
 void CommandProcessor::ProcessTree(const string &cmd) {
     if (cmd == "Get Root") {
-        generalTree->getRoot();
+//        generalTree->getRoot();
     }else if (cmd == "Get Size") {
         generalTree->getSize();
     }else if (cmd == "Get Height"){
@@ -147,9 +147,12 @@ void CommandProcessor::ProcessTree(const string &cmd) {
 
 void CommandProcessor::ProcessHeap(const string &cmd) {
     if (cmd == "Max") {
-        heap->getMax();
+        cout << "Max: " << "Key[" << heap->getMax()->getKey() << "]"
+        << " Value[" << heap->getMax()->getValue() << "]" << endl;
     }else if (cmd == "Size") {
-        heap->getHeight();
+        cout << "Size: " << heap->getSize() << endl;
+    }else if (cmd == "Height"){
+        cout << "Height: " << heap->getHeight() << endl;
     }else if (cmd == "Empty"){
         heap->empty();
     }else if( cmd == "Leaves") {
@@ -170,6 +173,7 @@ void CommandProcessor::ProcessHeap(const string &cmd) {
     }else if(cmd == "Delete Max"){
         heap->delMax();
     }else if(cmd == "Display"){
+        heap->Display();
     }else if(cmd == "Exit"){
         exit(0);
     }else{
