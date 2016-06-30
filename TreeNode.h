@@ -1,4 +1,6 @@
 #pragma once
+#include <iostream>
+using namespace std;
 
 template<class Type>class TreeNode {
 private:
@@ -10,8 +12,7 @@ private:
     TreeNode *left;
     TreeNode *right;
 public:
-    TreeNode(string treeType, int key, Type value) {
-        cout << "Constructor activated" << endl;
+    TreeNode<Type>(string treeType, int key, Type value) {
         if(treeType == "General"){
             this->key = key;
             this->value = value;
@@ -21,8 +22,6 @@ public:
         else if(treeType == "Heap"){
             this->key = key;
             this->value = value;
-            this->left = nullptr;
-            this->right = nullptr;
         }
         else if(treeType == "AVL"){
             this->key = key;
@@ -46,8 +45,6 @@ public:
         else if(treeType == "Heap"){
             this->key = key;
             this->value = 0;
-            this->left = nullptr;
-            this->right = nullptr;
         }
         else if(treeType == "AVL"){
             this->key = key;
@@ -60,7 +57,7 @@ public:
         }
     }
 
-    TreeNode(string treeType, Type value) {
+    TreeNode(string treeType, Type value) {         //What if Type is int?!?!?! SHIT!
         cout << "Constructor activated" << endl;
         if(treeType == "General"){
             this->key = 0;
@@ -71,8 +68,6 @@ public:
         else if(treeType == "Heap"){
             this->key = 0;
             this->value = value;
-            this->left = nullptr;
-            this->right = nullptr;
         }
         else if(treeType == "AVL"){
             this->key = 0;
@@ -126,7 +121,7 @@ public:
         this->sibling = sibling;
     }
 
-    TreeNode *getLeft() const {
+    TreeNode *getLeft(int index) {
         return left;
     }
 

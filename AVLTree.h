@@ -9,7 +9,7 @@ private:
 public:
 
     AVLTree() {
-        cout << "Constructor activated" << endl;
+//        cout << "Constructor activated" << endl;
     }
 
     TreeNode<Type> *getRoot() {

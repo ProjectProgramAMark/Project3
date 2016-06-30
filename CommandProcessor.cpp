@@ -8,7 +8,7 @@ Menu* CommandProcessor::menus[NR_CMD_STATES];
 
 GeneralTree<string> *generalTree = new GeneralTree<string>();
 AVLTree<double> *avlTree = new AVLTree<double>();
-//Heap<double> *heap = new Heap<double>();
+Heap<string> *heap = new Heap<string>();
 
 void CommandProcessor::Process_Commands()
 {
@@ -29,8 +29,8 @@ void CommandProcessor::Process_Commands()
             case _Tree: ProcessTree(*cmd);
                 break;
 
-//            case _Heap: ProcessHeap(*cmd);
-//                break;
+            case _Heap: ProcessHeap(*cmd);
+                break;
 
             case _AVLTree: ProcessAVLTree(*cmd);
                 break;
@@ -47,10 +47,9 @@ void CommandProcessor::Process_Initial_Cmd(const string& cmd)
 {
     if (cmd == "Tree") {
         command_state = _Tree;
-//    }else if (cmd == "Heap") {
-//        command_state = _Heap;
-//    }
-    } else if(cmd == "AVLTree") {
+    }else if (cmd == "Heap") {
+        command_state = _Heap;
+    }else if(cmd == "AVLTree") {
         command_state = _AVLTree;
     } else {
         cout << "Quit command\n";
@@ -146,61 +145,37 @@ void CommandProcessor::ProcessTree(const string &cmd) {
     }
 }
 
-//void CommandProcessor::ProcessHeap(const string &cmd) {
-//    cout << "Process heap yo" << endl;
-////    if (cmd == "Add Node to Front") {
-////        string input;
-////        double value;
-////        cout << "Enter value of data in node: " << endl;
-////        getline(cin,input);
-////        stringstream(input) >> value;
-////        doublyLinkedList->push_front(value);
-////        doublyLinkedList->printList();
-////    }else if (cmd == "Add Node to Back") {
-////        string input;
-////        double value;
-////        cout << "Enter value of data in node: " << endl;
-////        getline(cin,input);
-////        stringstream(input) >> value;
-////        doublyLinkedList->push_back(value);
-////    }else if (cmd == "Delete Node at Front"){
-////        doublyLinkedList->pop_front();
-////    }else if( cmd == "Delete Value") {
-////        string input;
-////        double value;
-////        cout << "Enter value to be deleted: " << endl;
-////        getline(cin,input);
-////        stringstream(input) >> value;
-////        doublyLinkedList->erase(value);
-////    }else if(cmd == "Get Size of List") {
-////        doublyLinkedList->getSize();
-////    }else if(cmd == "Is List Empty") {
-////        doublyLinkedList->empty();
-////    }else if(cmd == "Get Front Node") {
-////        doublyLinkedList->front();
-////    }else if(cmd == "Get Back Node"){
-////        doublyLinkedList->back();
-////    }else if(cmd == "Get Head Pointer ;)"){
-////        doublyLinkedList->getHead();
-////    }else if(cmd == "Get Tail Pointer"){
-////        doublyLinkedList->getTail();
-////    }else if(cmd == "Get Count"){
-////        string input;
-////        double value;
-////        cout << "Insert value to count: ";
-////        getline(cin,input);
-////        stringstream(input) >> value;
-////        doublyLinkedList->getCount(value);
-////    }else if(cmd == "Print List"){
-////        doublyLinkedList->printList();
-////    }else if(cmd == "Delete List"){
-////        doublyLinkedList->~DoublyLinkedList();
-////    }else if(cmd == "Exit"){
-////        exit(0);
-////    }else{
-////        cout << "Error" << endl;
-////    }
-//}
+void CommandProcessor::ProcessHeap(const string &cmd) {
+    if (cmd == "Max") {
+        heap->getMax();
+    }else if (cmd == "Size") {
+        heap->getHeight();
+    }else if (cmd == "Empty"){
+        heap->empty();
+    }else if( cmd == "Leaves") {
+        heap->leaves();
+    }else if(cmd == "Build Tree") {
+        heap->buildTree();
+    }else if(cmd == "Clear") {
+        heap->clear();
+    }else if(cmd == "Insert") {
+        int key;
+        string value;
+        cout << "Enter key: " ;
+        cin >> key;
+        getchar();
+        cout << "Enter value: ";
+        getline(cin, value);
+        heap->insert(key, value);
+    }else if(cmd == "Delete Max"){
+        heap->delMax();
+    }else if(cmd == "Display"){
+    }else if(cmd == "Exit"){
+        exit(0);
+    }else{
+        cout << "Error" << endl;
+    }
+}
 
 void CommandProcessor::ProcessAVLTree(const string &cmd) {
     if (cmd == "Get Root") {
@@ -268,7 +243,7 @@ void CommandProcessor::Create_Menus()
     // Menu for Initial command state
     Menu* menu = new Menu("Which linked list do you want to create?");
     menu->Add_Command("Tree");
-//    menu->Add_Command("Heap");
+    menu->Add_Command("Heap");
     menu->Add_Command("AVLTree");
 
     menus[Initial] = menu;
@@ -296,22 +271,19 @@ void CommandProcessor::Create_Menus()
     menus[_Tree] = menu;
 
     //Menu for Heap
-//    menu = new Menu("Enter command number:\n");
-//    menu->Add_Command("Add Node to Front");
-//    menu->Add_Command("Add Node to Back");
-//    menu->Add_Command("Delete Node at Front");
-//    menu->Add_Command("Delete Value");
-//    menu->Add_Command("Is List Empty");
-//    menu->Add_Command("Get Front Node");
-//    menu->Add_Command("Get Back Node");
-//    menu->Add_Command("Get Head Pointer ;)");
-//    menu->Add_Command("Get Tail Pointer");
-//    menu->Add_Command("Get Size of List");
-//    menu->Add_Command("Get Count");
-//    menu->Add_Command("Print List");
-//    menu->Add_Command("Delete List");
-//    menu->Add_Command("Exit");
-//    menus[_Heap] = menu;
+    menu = new Menu("Enter command number:\n");
+    menu->Add_Command("Max");
+    menu->Add_Command("Size");
+    menu->Add_Command("Height");
+    menu->Add_Command("Empty");
+    menu->Add_Command("Leaves");
+    menu->Add_Command("Build Tree");
+    menu->Add_Command("Clear");
+    menu->Add_Command("Insert");
+    menu->Add_Command("Delete Max");
+    menu->Add_Command("Display");
+    menu->Add_Command("Exit");
+    menus[_Heap] = menu;
 
     //Menu for AVLTree
     menu = new Menu("Enter command number:\n");

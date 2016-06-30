@@ -13,7 +13,7 @@ private:
     TreeNode<Type> *root;
 public:
     GeneralTree() {
-        buildTree();
+//        buildTree();
     }
 
 
