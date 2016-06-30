@@ -2,16 +2,16 @@
 #include "TreeNode.h"
 
 #define PARENT(i)  (i/2)
-#define LEFT(nodeIndex) 2(nodeIndex) //index starts at 1
-#define RIGHT(nodeIndex) 2(nodeIndex)+1
+//#define LEFT(nodeIndex) 2(nodeIndex) //index starts at 1
+//#define RIGHT(nodeIndex) 2(nodeIndex)+1
 
 const INITIAL_CAP = 8;
 
 
 template <class Type> class Heap {
 private:
-    TreeNode<Type> node;
-    Type * array;
+    TreeNode<Type> * node;
+    Type ** array;
     int numElements;
     int capacity;
     int height;
@@ -38,7 +38,7 @@ public:
 
     void insert(int key, Type & data) {
         if(numElements == capacity - 1){
-            doubleSize(); // create function
+//            doubleSize(); // create function
         }
         else{
             node = new TreeNode("Heap", key, data);
