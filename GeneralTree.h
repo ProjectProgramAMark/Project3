@@ -3,6 +3,7 @@
 #include "TreeNode.h"
 #include <iostream>
 #include <fstream>
+#include "tinyxml.h"
 
 using namespace std;
 
@@ -28,6 +29,7 @@ public:
 
     int getHeight() {
         cout << "Get Height implemented" << endl;
+
         return 1;
     }
 
@@ -84,44 +86,60 @@ public:
     void levelorder() {
         cout << "Levelorder implemented" << endl;
 
-    }
-
-    void inorder() {
-        cout << "Inorder implemented" << endl;
 
     }
-
 
     void buildTree() {
         cout << "Build Tree implemented" << endl;
-        string line;
-        ifstream treeFile("generalTree.txt");
-        if (treeFile.is_open()) {
-            while (getline(treeFile, line)) {
-                unsigned long pos = line.find(' ');
-                string data = line.substr(0, pos);
-//                cout << "Data is: " << data << endl;
-                string str = line.substr(pos + 1);
-//                cout << "Str is: " << str << endl;
-                pos = str.find_last_of('.');
-                string str2 = str.substr(pos + 1);
-//                cout << "Str2 is: " << str2 << endl;
-                string::size_type sz;
-                int node_pos = stoi(str2, &sz);
-//                cout << "Node_pos is: " << node_pos << endl;
-                string parent = str.substr(0, pos);
-//                cout << "Parent is: " << parent << endl;
-                //TreeNode<Type> *ptr = findNode(str);
-                //insert(data, ptr, node_pos);
-            }
-            treeFile.close();
+        // Loading XML file and getting rootNode
+        string filename = "generalTree.xml";
+        TiXmlDocument doc(filename);
+        bool loadOkay = doc.LoadFile();
+        if (!loadOkay) {
+            cout << "Could not load file " << filename << endl;
+            cout << "Error='" << doc.ErrorDesc() <<"'. Exiting.\n";
         }
-        else cout << "Unable to open file";
+        TiXmlNode* generalTreeNode = doc.FirstChild("GeneralTree");
+        assert(generalTreeNode != 0);
+
+        TiXmlNode* rootNode = generalTreeNode->FirstChild();
+        assert(rootNode != 0);
+
+        // Populating the rest of the tree via recursive function
+        recFunction(rootNode);
+    }
+
+    void recFunction(TiXmlNode *node) {
+        if(node->FirstChildElement() != NULL) {
+            // Do something
+        } else {
+            int key = stoi(node->ToElement()->Attribute("key"));
+            Type data = node->ToElement()->Attribute("data");
+            TreeNode<Type> *treeNode = new TreeNode<Type>("General", key, data);
+            return recFunction(node->FirstChild());
+        }
+        // After recursiveness is finished
+        while(node->NextSibling() != NULL) {
+            // Converting XML node to TreeNode
+            // Making previous and current nodes
+            int key = stoi(node->ToElement()->Attribute("key"));
+            Type data = node->ToElement()->Attribute("data");
+            TreeNode<Type> *prev = new TreeNode<Type>("General", key, data);
+            int key2 = stoi(node->NextSibling()->ToElement()->Attribute("key"));
+            Type data2 = node->NextSibling()->ToElement()->Attribute("data");
+            TreeNode<Type> *cur = new TreeNode<Type>("General", key2, data2);
+            // Create linked list of siblings
+            prev->setSibling(cur);
+        }
     }
 
     void clear() {
         cout << "Clear implemented" << endl;
 
+    }
+
+    void display() {
+        // Breadth First Traversal
     }
 
     // Can use as many parameters as we need here

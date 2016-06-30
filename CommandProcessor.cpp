@@ -6,7 +6,7 @@ using namespace std;
 Command_States CommandProcessor:: command_state = Initial;
 Menu* CommandProcessor::menus[NR_CMD_STATES];
 
-GeneralTree<double> *linkedTree = new GeneralTree<double>();
+GeneralTree<string> *generalTree = new GeneralTree<string>();
 AVLTree<double> *avlTree = new AVLTree<double>();
 //Heap<double> *heap = new Heap<double>();
 
@@ -61,84 +61,84 @@ void CommandProcessor::Process_Initial_Cmd(const string& cmd)
 
 void CommandProcessor::ProcessTree(const string &cmd) {
     if (cmd == "Get Root") {
-        linkedTree->getRoot();
+        generalTree->getRoot();
     }else if (cmd == "Get Size") {
-        linkedTree->getSize();
+        generalTree->getSize();
     }else if (cmd == "Get Height"){
-        linkedTree->getHeight();
+        generalTree->getHeight();
     }else if(cmd == "Get Depth") {
         string input;
-        double value;
+//        double value;
         cout << "Which node to calculate depth?" << endl;
         getline(cin,input);
-        stringstream(input) >> value;
-        TreeNode<double> *node = new TreeNode<double>("General", value);
-        linkedTree->getDepth(node);
+//        stringstream(input) >> value;
+        TreeNode<string> *node = new TreeNode<string>("General", input);
+        generalTree->getDepth(node);
     }else if(cmd == "Is Empty") {
-        linkedTree->empty();
+        generalTree->empty();
     }else if(cmd == "Get Leaves") {
-        linkedTree->empty();
+        generalTree->empty();
     }else if(cmd == "Get Siblings") {
         string input;
-        double value;
+//        double value;
         cout << "Which node to get siblings for?" << endl;
         getline(cin,input);
-        stringstream(input) >> value;
-        TreeNode<double> *node = new TreeNode<double>("General", value);
-        linkedTree->siblings(node);
+//        stringstream(input) >> value;
+        TreeNode<string> *node = new TreeNode<string>("General", input);
+        generalTree->siblings(node);
     }else if(cmd == "Find Common Ancestor") {
         string input;
-        double value;
+//        double value;
         string trash;
         cout << "Please enter node 1 for common ancestor" << endl;
         getline(cin,input);
-        stringstream(input) >> value;
-        TreeNode<double> *node1 = new TreeNode<double>("General", value);
+//        stringstream(input) >> value;
+        TreeNode<string> *node1 = new TreeNode<string>("General", input);
         getline(cin, trash);
         cout << "Please enter node 2 for common ancestor" << endl;
         getline(cin,input);
-        stringstream(input) >> value;
-        TreeNode<double> * node2 = new TreeNode<double>("General", value);
-        linkedTree->findCommonAncestor(node1, node2);
+//        stringstream(input) >> value;
+        TreeNode<string> * node2 = new TreeNode<string>("General", input);
+        generalTree->findCommonAncestor(node1, node2);
     }else if(cmd == "Find Tree Node") {
-        string input;
-        int key;
-        double data;
-        string trash;
-        cout << "Key for node" << endl;
-        getline(cin, input);
-        stringstream(input) >> key;
-        getline(cin, trash);
-        cout << "Data for node" << endl;
-        getline(cin, input);
-        stringstream(input) >> data;
-        linkedTree->findNode(key);
+        string data;
+//        string trash;
+//        cout << "Key for node" << endl;
+        getline(cin, data);
+//        getline(cin, trash);
+//        cout << "Data for node" << endl;
+        getline(cin, data);
+//        stringstream(input) >> data;
+        generalTree->findNode(data);
     }else if(cmd == "Preorder"){
-        linkedTree->preorder();
+        generalTree->preorder();
     }else if(cmd == "Postorder"){
-        linkedTree->postorder();
+        generalTree->postorder();
     }else if(cmd == "Levelorder"){
-        linkedTree->levelorder();
+        generalTree->levelorder();
     }else if(cmd == "Build Tree"){
-        linkedTree->buildTree();
+        generalTree->buildTree();
     }else if(cmd == "Clear"){
-        linkedTree->clear();
+        generalTree->clear();
     }else if(cmd == "Insert"){
         string input;
-        double data;
-        cout << "What data do you want the TreeNode to have?" << endl;
+        int key;
+        string data;
+        string trash;
+        cout << "What data do you want to be in the TreeNode?" << endl;
+        getline(cin, data);
+        getline(cin, trash);
+        cout << "What key do you want the TreeNoden to have?" << endl;
         getline(cin, input);
-        stringstream(input) >> data;
-        TreeNode<double> *node = new TreeNode<double>("General", data);
-        linkedTree->insert(node);
+        stringstream(input) >> key;
+        TreeNode<string> *node = new TreeNode<string>("General", key, data);
+        generalTree->insert(node);
     }else if(cmd == "Delete") {
-        string input;
-        double data;
+        string data;
         cout << "What data does the TreeNode you want to delete have?" << endl;
-        getline(cin, input);
-        stringstream(input) >> data;
-        TreeNode<double> *node = new TreeNode<double>("General", data);
-        linkedTree->del(node);
+        getline(cin, data);
+        TreeNode<string> *node = new TreeNode<string>("General", data);
+        generalTree->del(node);
     }else if(cmd == "Exit"){
         exit(0);
     }else{
