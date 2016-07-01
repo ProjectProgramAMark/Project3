@@ -110,11 +110,14 @@ void CommandProcessor::ProcessTree(const string &cmd) {
 //        stringstream(input) >> data;
         generalTree->findNode(data);
     }else if(cmd == "Preorder"){
-        generalTree->preorder();
+        TreeNode<string> *root = generalTree->getRoot();
+        generalTree->preorder(root);
     }else if(cmd == "Postorder"){
-        generalTree->postorder();
+        TreeNode<string> *root = generalTree->getRoot();
+        generalTree->postorder(root);
     }else if(cmd == "Levelorder"){
-        generalTree->levelorder();
+        TreeNode<string> *root = generalTree->getRoot();
+        generalTree->levelorder(root);
     }else if(cmd == "Build Tree"){
         generalTree->buildTree();
     }else if(cmd == "Clear"){

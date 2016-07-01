@@ -12,7 +12,11 @@ private:
     TreeNode *left;
     TreeNode *right;
 public:
+<<<<<<< Updated upstream
     TreeNode<Type>(string treeType, int key, Type value) {
+=======
+    TreeNode(string treeType, int key, Type value) {
+>>>>>>> Stashed changes
         if(treeType == "General"){
             this->key = key;
             this->value = value;
@@ -35,7 +39,6 @@ public:
     }
 
     TreeNode(string treeType, int key) {
-        cout << "Constructor activated" << endl;
         if(treeType == "General"){
             this->key = key;
             this->value = 0;
@@ -57,8 +60,12 @@ public:
         }
     }
 
+<<<<<<< Updated upstream
     TreeNode(string treeType, Type value) {         //What if Type is int?!?!?! SHIT!
         cout << "Constructor activated" << endl;
+=======
+    TreeNode(string treeType, Type value) {
+>>>>>>> Stashed changes
         if(treeType == "General"){
             this->key = 0;
             this->value = value;
@@ -80,6 +87,27 @@ public:
         }
     }
 
+
+    TreeNode(string treeType) {
+        if(treeType == "General"){
+            this->key = 0;
+            this->children = nullptr;
+            this->sibling = nullptr;
+        }
+        else if(treeType == "Heap"){
+            this->key = 0;
+            this->left = nullptr;
+            this->right = nullptr;
+        }
+        else if(treeType == "AVL"){
+            this->key = 0;
+            this->left = nullptr;
+            this->right = nullptr;
+        }
+        else{
+            cout << "Node could not be created. Try again." << endl;
+        }
+    }
 
     int getKey() const {
         return key;
