@@ -1,6 +1,7 @@
 #pragma once
 #include "TreeNode.h"
 #include <cmath>
+#include <fstream>
 
 #define PARENT(i)  (i/2)
 #define LEFT(i) (2*i)
@@ -48,7 +49,29 @@ public:
         return count;
     }
 
-    void buildTree() {}
+    void buildTree() {
+        ifstream file;
+        int key;
+        string value, input;
+        file.open("/home/randomguy/ClionProjects/Project3/HeapExample.txt");
+        if (file.is_open()) {
+            cout << "File Opened." << endl;
+        }
+        else {
+            cerr << "File could not be opened." << endl;
+        }
+
+        if (file) {
+            file >> key >> value;
+            this->insert(key, value);
+            while (getline(file, input)) {
+                if (file >> key >> value) {
+                    this->insert(key, value);
+                }
+            }
+        }
+        file.close();
+    }
 
     void clear() {
         for (int i = 1; i <= numElements; i++) {
