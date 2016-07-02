@@ -167,7 +167,7 @@ public:
             // Making previous and current nodes
             cout << "DOING NODE TO ELEMENT" << endl;
             cout << node->ToText()->Value() << endl;
-            //cout << node->ToElement()->Attribute("key") << endl;
+            cout << node->ToElement()->Attribute("key") << endl;
             cout << "DONE WITH NODE TO ELEMENT" << endl;
             int key = stoi(node->ToElement()->Attribute("key"));
             cout << "Key 1 is: " << key << endl;

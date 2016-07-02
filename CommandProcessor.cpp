@@ -157,9 +157,14 @@ void CommandProcessor::ProcessHeap(const string &cmd) {
     }else if (cmd == "Height"){
         cout << "Height: " << heap->getHeight() << endl;
     }else if (cmd == "Empty"){
-        heap->empty();
+        if (heap->empty()) {
+            cout << "Heap is empty." << endl;
+        }
+        else {
+            cout << "Heap is Not Empty." << endl;
+        }
     }else if( cmd == "Leaves") {
-        heap->leaves();
+        cout << "Number of Leaves: " << heap->leaves() << endl;
     }else if(cmd == "Build Tree") {
         heap->buildTree();
     }else if(cmd == "Clear") {
@@ -169,12 +174,21 @@ void CommandProcessor::ProcessHeap(const string &cmd) {
         string value;
         cout << "Enter key: " ;
         cin >> key;
+        while (cin.fail()) {
+            cout << "Error" << std::endl;
+            cin.clear();
+            cin.ignore(256, '\n');
+            cout << "Enter key: ";
+            cin >> key;
+        }
         getchar();
         cout << "Enter value: ";
         getline(cin, value);
         heap->insert(key, value);
     }else if(cmd == "Delete Max"){
+        int max = heap->getMax()->getKey();
         heap->delMax();
+        cout << "Max " << max << " deleted." << endl;
     }else if(cmd == "Display"){
         heap->Display();
     }else if(cmd == "Exit"){

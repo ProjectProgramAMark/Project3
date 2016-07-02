@@ -12,11 +12,7 @@ private:
     TreeNode *left;
     TreeNode *right;
 public:
-<<<<<<< Updated upstream
-    TreeNode<Type>(string treeType, int key, Type value) {
-=======
     TreeNode(string treeType, int key, Type value) {
->>>>>>> Stashed changes
         if(treeType == "General"){
             this->key = key;
             this->value = value;
@@ -60,12 +56,7 @@ public:
         }
     }
 
-<<<<<<< Updated upstream
-    TreeNode(string treeType, Type value) {         //What if Type is int?!?!?! SHIT!
-        cout << "Constructor activated" << endl;
-=======
     TreeNode(string treeType, Type value) {
->>>>>>> Stashed changes
         if(treeType == "General"){
             this->key = 0;
             this->value = value;
