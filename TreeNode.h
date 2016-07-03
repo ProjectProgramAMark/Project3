@@ -140,10 +140,17 @@ public:
         this->sibling = sibling;
     }
 
-    TreeNode *getLeft(int index) {
+    TreeNode setLeft(TreeNode *left) {
+        this->left = left;
+    }
+
+    TreeNode *getLeft() {
         return left;
     }
 
+    TreeNode setRight(TreeNode *right) {
+        this->right = right;
+    }
     TreeNode *getRight() const {
         return right;
     }
