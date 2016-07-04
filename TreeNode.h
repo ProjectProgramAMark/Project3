@@ -4,7 +4,7 @@ using namespace std;
 
 template<class Type>class TreeNode {
 private:
-    int key;
+    int key, balanceFactor;
     Type value;
     TreeNode *parent;
     TreeNode *children;
@@ -58,7 +58,6 @@ public:
 
     TreeNode(string treeType, Type value) {
         if(treeType == "General"){
-            this->key = 0;
             this->value = value;
             this->children = nullptr;
             this->sibling = nullptr;
@@ -153,5 +152,13 @@ public:
     }
     TreeNode *getRight() const {
         return right;
+    }
+
+    int getBalanceFactor() {
+        return this->balanceFactor;
+    }
+
+    int setBalanceFactor(int x) {
+        balanceFactor = x;
     }
 };
