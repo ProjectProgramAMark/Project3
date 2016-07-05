@@ -1,4 +1,3 @@
-#pragma once
 #include "TreeNode.h"
 #include <cmath>
 #include <fstream>

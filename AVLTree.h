@@ -1,7 +1,6 @@
-#pragma once
 #include <iostream>
 #include "TreeNode.h"
-#include <iostream>
+#include <cmath>
 using namespace std;
 
 
@@ -23,53 +22,53 @@ public:
     bool empty() { return size == 0; }
 
     void buildTree() {
-        ifstream file;
-        int key;
-        string value, input;
-
-        file.open("/home/randomguy/ClionProjects/Project3/HeapExample.txt");
-        if (file.is_open()) {
-            cout << "File Opened." << endl;
-        }
-        else {
-            cerr << "File could not be opened." << endl;
-        }
-
-        if (file) {
-            file >> key >> value;
-            cout << "key: " << key << " value: " << value << endl;
-            this->insert(key, value);
-            while (getline(file, input)) {
-                if (file >> key >> value) {
-                    cout << "key: " << key << " value: " << value << endl;
-                    this->insert(key, value);
-                }
-            }
-        }
-        file.close();
+//        ifstream file;
+//        int key;
+//        string value, input;
+//
+//        file.open("/home/randomguy/ClionProjects/Project3/HeapExample.txt");
+//        if (file.is_open()) {
+//            cout << "File Opened." << endl;
+//        }
+//        else {
+//            cerr << "File could not be opened." << endl;
+//        }
+//
+//        if (file) {
+//            file >> key >> value;
+//            cout << "key: " << key << " value: " << value << endl;
+//            this->insert(key, value);
+//            while (getline(file, input)) {
+//                if (file >> key >> value) {
+//                    cout << "key: " << key << " value: " << value << endl;
+//                    this->insert(key, value);
+//                }
+//            }
+//        }
+//        file.close();
     }
 
-    void balance(TreeNode<Type> *n) {
-        setBalance(n);
+    void balance(TreeNode<Type> *t) {
+        setBalance(t);
 
-        if (n->getBalanceFactor() == -2) {
-            if (height(n->getLeft()->getLeft()) >= height(n->getLeft()->getRight()))
-                n = rotateRight(n);
+        if (t->getBalanceFactor() == -2) {
+            if (height(t->getLeft()->getLeft()) >= height(t->getLeft()->getRight()))
+                t = rotateRight(t);
             else
-                n = rotateLeftRight(n);
+                t = rotateLeftRight(t);
         }
-        else if (n->getBalanceFactor() == 2) {
-            if (height(n->getRight()->getRight()) >= height(n->getRight()->getLeft()))
-                n = rotateLeft(n);
+        else if (t->getBalanceFactor() == 2) {
+            if (height(t->getRight()->getRight()) >= height(t->getRight()->getLeft()))
+                t = rotateLeft(t);
             else
-                n = rotateRightLeft(n);
+                t = rotateRightLeft(t);
         }
 
-        if (n->getParent() != NULL) {
-            balance(n->getParent());
+        if (t->getParent() != NULL) {
+            balance(t->getParent());
         }
         else {
-            root = n;
+            root = t;
         }
     }
 
@@ -124,31 +123,31 @@ public:
         return b;
     }
 
-    TreeNode<Type> *rotateLeftRight(TreeNode<Type> *n) {
-        n->setLeft(rotateLeft(n->getLeft()));
-        return rotateRight(n);
+    TreeNode<Type> *rotateLeftRight(TreeNode<Type> *t) {
+        t->setLeft(rotateLeft(t->getLeft()));
+        return rotateRight(t);
     }
 
-    TreeNode<Type> *rotateRightLeft(TreeNode<Type> *n) {
-        n->setRight(rotateRight(n->getRight()));
-        return rotateLeft(n);
+    TreeNode<Type> *rotateRightLeft(TreeNode<Type> *t) {
+        t->setRight(rotateRight(t->getRight()));
+        return rotateLeft(t);
     }
 
-    int height(TreeNode<Type> *n) {
-        if (n == NULL)
+    int height(TreeNode<Type> *t) {
+        if (t == NULL)
             return -1;
-        return 1 + std::max(height(n->getLeft()), height(n->getRight()));
+        return 1 + std::max(height(t->getLeft()), height(t->getRight()));
     }
 
-    void setBalance(TreeNode<Type> *n) {
-        n->setBalanceFactor(height(n->getRight()) - height(n->getLeft()));
+    void setBalance(TreeNode<Type> *t) {
+        t->setBalanceFactor(height(t->getRight()) - height(t->getLeft()));
     }
 
-    void printBalance(TreeNode<Type> *n) {
-        if (n != NULL) {
-            printBalance(n->getLeft());
-            cout << n->getBalanceFactor << " ";
-            printBalance(n->getRight());
+    void printBalance(TreeNode<Type> *t) {
+        if (t != NULL) {
+            printBalance(t->getLeft());
+            cout << t->getBalanceFactor << " ";
+            printBalance(t->getRight());
         }
     }
 
@@ -166,19 +165,19 @@ public:
         }
         else {
             TreeNode<Type>
-                    *n = root,
+                    *t = root,
                     *parent;
 
             while (true) {
-                if (n->getKey() == key)
+                if (t->getKey() == key)
                     return false;
 
-                parent = n;
+                parent = t;
 
-                bool goLeft = n->getKey() > key;
-                n = goLeft ? n->getLeft() : n->getRight();
+                bool goLeft = t->getKey() > key;
+                t = goLeft ? t->getLeft() : t->getRight();
 
-                if (n == NULL) {
+                if (t == NULL) {
                     if (goLeft) {
                         parent->setLeft(new TreeNode<Type>("AVL", key, value));
                         size++;
@@ -309,25 +308,25 @@ public:
 
     }
     void levelorder() {
-        if (!empty()) {
-            queue<TreeNode<Type> *> *queue = new ::queue<TreeNode<Type> *>();
-            queue->push(root);
-            TreeNode<Type> *temp = NULL;
-            while (!queue->empty()) {
-                temp = queue->front();
-                queue->pop();
-                if (temp->getLeft()) {
-                    queue->push(temp->getLeft());
-                }
-                if (temp->getRight()) {
-                    queue->push(temp->getRight());
-                }
-                cout << "Key: " << temp->getKey() << " Value: " << temp->getValue() << endl;
-            }
-        }
-        else {
-            cout << "Tree is empty" << endl;
-        }
+//        if (!empty()) {
+//            queue<TreeNode<Type>* > *queue = new ::queue<TreeNode<Type>*>();
+//            queue->push(root);
+//            TreeNode<Type> *temp = NULL;
+//            while (!queue->empty()) {
+//                temp = queue->front();
+//                queue->pop();
+//                if (temp->getLeft()) {
+//                    queue->push(temp->getLeft());
+//                }
+//                if (temp->getRight()) {
+//                    queue->push(temp->getRight());
+//                }
+//                cout << "Key: " << temp->getKey() << " Value: " << temp->getValue() << endl;
+//            }
+//        }
+//        else {
+//            cout << "Tree is empty" << endl;
+//        }
     }
 
     void inorder() {
