@@ -139,16 +139,18 @@ public:
         this->sibling = sibling;
     }
 
-    TreeNode setLeft(TreeNode *left) {
+    TreeNode *setLeft(TreeNode *left) {
         this->left = left;
+        return left;
     }
 
     TreeNode *getLeft() {
         return left;
     }
 
-    TreeNode setRight(TreeNode *right) {
+    TreeNode *setRight(TreeNode *right) {
         this->right = right;
+        return right;
     }
     TreeNode *getRight() const {
         return right;
@@ -160,5 +162,6 @@ public:
 
     int setBalanceFactor(int x) {
         balanceFactor = x;
+        return balanceFactor;
     }
 };

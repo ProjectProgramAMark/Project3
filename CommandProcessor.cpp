@@ -100,15 +100,12 @@ void CommandProcessor::ProcessTree(const string &cmd) {
         TreeNode<string> * node2 = new TreeNode<string>("General", input);
         generalTree->findCommonAncestor(node1, node2);
     }else if(cmd == "Find Tree Node") {
-        string data;
-//        string trash;
-//        cout << "Key for node" << endl;
-        getline(cin, data);
-//        getline(cin, trash);
-//        cout << "Data for node" << endl;
-        getline(cin, data);
-//        stringstream(input) >> data;
-        generalTree->findNode(data);
+        int key;
+        string input;
+        cout << "Key for node" << endl;
+        getline(cin, input);
+        stringstream(input) >> key;
+        generalTree->findNode(key);
     }else if(cmd == "Preorder"){
         TreeNode<string> *root = generalTree->getRoot();
         generalTree->preorder(root);
@@ -125,16 +122,21 @@ void CommandProcessor::ProcessTree(const string &cmd) {
     }else if(cmd == "Insert"){
         string input;
         int key;
+        int parentKey;
         string data;
         string trash;
         cout << "What data do you want to be in the TreeNode?" << endl;
         getline(cin, data);
         getline(cin, trash);
-        cout << "What key do you want the TreeNoden to have?" << endl;
+        cout << "What key do you want the TreeNode to have?" << endl;
         getline(cin, input);
         stringstream(input) >> key;
+        getline(cin, trash);
+        cout << "What key does the parent TreeNode have?" << endl;
+        getline(cin, input);
+        stringstream(input) >> parentKey;
         TreeNode<string> *node = new TreeNode<string>("General", key, data);
-//        generalTree->insert(node);
+        generalTree->insert(node, parentKey);
     }else if(cmd == "Delete") {
         string data;
         cout << "What data does the TreeNode you want to delete have?" << endl;

@@ -9,73 +9,124 @@
 
 using namespace std;
 
-const int CAP = 10;
 
 template<class Type>
 class GeneralTree {
 private:
     TreeNode<Type> *root;
-    TreeNode<Type> ***array;
-    int height;
+    int height = 0;
     int size;
-    int parentSize = 0;
-    int childSize = 0;
 public:
-    GeneralTree()
-            : root(nullptr), height(0), size(0) {
-        array = new TreeNode<Type> **[CAP];
-        for (int i = 0; i < CAP; i++) {
-            array[i] = new TreeNode<Type> *[CAP];
-        }
-        for (int i = 0; i < CAP; i++) {
-            for (int j = 0; j < CAP; j++) {
-                array[i][j] = new TreeNode<Type>("General", " ");
-            }
-        }
+    GeneralTree() {
+        size = 0;
+        // Idk what buildTree is doing, so I'm just going
+        // to make a dummy constructor that builds a tree so the
+        // rest of the functions can be done
+
+        root = new TreeNode<Type>("General", 1, "Genres");
+        TreeNode<string> *node = new TreeNode<string>("General", 2, "Thriller");
+        insert(node, 1);
+        node = new TreeNode<string>("General", 6, "Goodnight Mommy");
+        insert(node, 2);
+        node = new TreeNode<string>("General", 3, "Action");
+        insert(node, 1);
+        node = new TreeNode<string>("General", 4, "Romance");
+        insert(node, 1);
+        node = new TreeNode<string>("General", 7, "A Walk to Remember");
+        insert(node, 4);
+        node = new TreeNode<string>("General", 8, "The Notebook");
+        insert(node, 4);
+        node = new TreeNode<string>("General", 5, "Anime");
+        insert(node, 1);
+        node = new TreeNode<string>("General", 9, "Full Metal Alchemist");
+        insert(node, 1);
+        node = new TreeNode<string>("General", 10, "Pokemon 2000: The Movie");
+        insert(node, 5);
+    }
+
+    GeneralTree(string stuff) : size(0), root(NULL), height(0) {
+        // parameter is in there so this one isn't called by default until fixed
+        buildTree();
     }
 
 
     TreeNode<Type> *getRoot() {
-        cout << "Get Root implemented" << endl;
-        return root;
+        if (root) {
+            return root;
+        }
+        cout << "Root is empty" << endl;
+        return NULL;
     }
 
     int getSize() {
-        cout << "Get Size implemented" << endl;
         return size;
     }
 
     int getHeight() {
-        double height = (log(size) / log(2));
-        return (int) height;
+        if (!empty()) {
+            int max = 0;
+            int h;
+            h = getHeight(root->getChildren());
+            if (h > max) {
+                max = h;
+            }
+            max++;
+            h = getHeight(root->getSibling());
+            if (h > max) {
+                max = h;
+            }
+            return max;
+        }
+        cout << "Tree is empty" << endl;
+        return 0;
     }
 
     int getHeight(TreeNode<Type> *node) {
-        cout << "Get Height of specific node implemented" << endl;
-        return 1;
-
+        if (!empty()) {
+            int max = 0;
+            int h;
+            h = getHeight(node->getChildren());
+            if (h > max) {
+                max = h;
+            }
+            max++;
+            h = getHeight(node->getSibling());
+            if (h > max) {
+                max = h;
+            }
+            return max;
+        }
+        cout << "Tree is empty" << endl;
+        return 0;
     }
 
     int getDepth(TreeNode<Type> *node) {
-        cout << "Get Depth of specific node implemented" << endl;
-        return 1;
-
+        if (node == root)
+            return 0;
+        else
+            return 1 + getDepth(node->getParent()); // 1 + (depth of parent)
     }
 
     bool empty() {
-        cout << "Is Empty implemented" << endl;
-        return size == 0;
+        return root == nullptr;
     }
 
-    int leaves() {
-        cout << "Get Leaves implemented" << endl;
-        return 1;
-
+    int leaves(TreeNode<Type> *node) {
+        do {
+            if (!node) return 0;
+            else if (!(node->getChildren())) return 1;
+            else {
+                return leaves(node->getChildren());
+            }
+        } while (node->getSibling());
     }
 
     int siblings(TreeNode<Type> *node) {
-        cout << "Get Siblings implemented" << endl;
-        return 1;
+        int count = 0;
+        while (node->getSibling()) {
+            count++;
+        }
+        return count;
 
     }
 
@@ -84,36 +135,52 @@ public:
         return root;
     }
 
-    TreeNode<Type> *findNode(Type data) {
-        cout << "Find node implemented" << endl;
-        return root;
+    TreeNode<Type> *findNode(int key, TreeNode<Type> *node) {
+        if (node->getKey() == key) {
+            return node;
+        } else {
+            if (node->getChildren()) {
+                return findNode(key, node->getChildren());
+            } else if (node->getSibling()) {
+                return findNode(key, node->getSibling());
+            } else {
+                cout << "Done traversing" << endl;
+            }
+        }
+        cout << "Node not found" << endl;
+    }
 
+    TreeNode<Type> *findNode(int key) {
+        // Just calls the other findNode function
+        // with root as the starting point
+        TreeNode<Type> *node = findNode(key, root);
+        return node;
     }
 
     void preorder(TreeNode<Type> *node) {
         // Visiting the node
-        cout << "Key: " << node->getKey() << "Value: "<< node->getValue() << endl;
+        cout << "Key: " << node->getKey() << "Value: " << node->getValue() << endl;
         // Traversing down children via left
-        if(node->getChildren() != nullptr) {
+        if (node->getChildren() != nullptr) {
             preorder(node->getChildren());
         }
-//         Traversing left children's siblings, A.K.A traversing right
-        if(node->getSibling() != nullptr) {
+        // Traversing left children's siblings, A.K.A traversing right
+        if (node->getSibling() != nullptr) {
             preorder(node->getSibling());
         }
     }
 
     void postorder(TreeNode<Type> *node) {
         // Traversing down children via left
-        if(node->getChildren() != nullptr) {
+        if (node->getChildren() != nullptr) {
             preorder(node->getChildren());
         }
         // Traversing left children's siblings, A.K.A traversing right
-        if(node->getSibling() != nullptr) {
+        if (node->getSibling() != nullptr) {
             preorder(node->getSibling());
         }
         // Visiting the node
-        cout << "Key: " << node->getKey() << "Value: "<< node->getValue() << endl;
+        cout << "Key: " << node->getKey() << "Value: " << node->getValue() << endl;
     }
 
     void levelorder(TreeNode<Type> *root) {
@@ -124,18 +191,18 @@ public:
         TreeNode<Type> *node = new TreeNode<Type>("General");
         queue->push(*root);
         count++;
-        while(!(queue->empty())) {
+        while (!(queue->empty())) {
             *node = queue->front();
             queue->pop();
             cout << node->getValue() << " ";
             TreeNode<Type> *tempNode = node->getChildren();
-            if(tempNode) {
-                while(tempNode->getSibling() != nullptr) {
+            if (tempNode) {
+                while (tempNode->getSibling() != nullptr) {
                     queue->push(*tempNode);
                     tempNode = tempNode->getSibling();
                 }
             }
-            if(--count == 0) {
+            if (--count == 0) {
                 count = queue->size();
                 level++;
             }
@@ -144,134 +211,101 @@ public:
     }
 
     void buildTree() {
-        ifstream file;
-        int key1, key2, key3;
-        string value, input;
-        file.open("/home/randomguy/ClionProjects/Project3/GenTree.txt");
-        if (file.is_open()) {
-            cout << "File Opened." << endl;
-        }
-        else {
-            cerr << "File could not be opened." << endl;
-        }
-
-        while (file) {
-            file >> key1;
-            getline(file, input, '.');
-            file >> key2;
-            getline(file, input, '.');
-            file >> key3;
-            getline(file, input, '\n');
-            value = input;
-            if (file.eof()) { break; }
-            cout << key1 << key2 << key3 << value << endl;
-            this->insert(key1, key2, key3, value);
-        }
-        file.close();
-//        cout << "Build Tree implemented" << endl;
         // Loading XML file and getting rootNode
-//        string filename = "generalTree.xml";
-//        TiXmlDocument doc(filename);
-//        bool loadOkay = doc.LoadFile();
-//        if (!loadOkay) {
-//            cout << "Could not load file " << filename << endl;
-//            cout << "Error='" << doc.ErrorDesc() <<"'. Exiting.\n";
-//        }
-//        TiXmlNode* generalTreeNode = doc.FirstChild("GeneralTree");
-//        assert(generalTreeNode != 0);
-//
-//        TiXmlNode* rootNode = generalTreeNode->FirstChild();
-//        assert(rootNode != 0);
-//        int key = stoi(rootNode->ToElement()->Attribute("key"));
-//        Type data = rootNode->ToElement()->GetText();
-//        root = new TreeNode<Type>("General", key, data);
-//        // Populating the rest of the tree via recursive function
-//        recFunction(rootNode);
-    }
-
-//    void recFunction(TiXmlNode *node) {
-//        if(node->FirstChildElement() == NULL) {
-//            cout << "First child element is null" << endl;
-//            // Do something
-//        } else {
-//            int key = stoi(node->ToElement()->Attribute("key"));
-//            Type data = node->ToElement()->GetText();
-//            TreeNode<Type> *treeNode = new TreeNode<Type>("General", key, data);
-//            cout << "Right BEFORE recursive activates" << endl;
-//            return recFunction(node->FirstChild());
-//        }
-//        cout << "After recursiveness done" << endl;
-//        // After recursiveness is finished
-//        while(node->NextSibling() != NULL) {
-//            // Converting XML node to TreeNode
-//            // Making previous and current nodes
-//            cout << "DOING NODE TO ELEMENT" << endl;
-//            cout << node->ToText()->Value() << endl;
-//            cout << node->ToElement()->Attribute("key") << endl;
-//            cout << "DONE WITH NODE TO ELEMENT" << endl;
-//            int key = stoi(node->ToElement()->Attribute("key"));
-//            cout << "Key 1 is: " << key << endl;
-//            Type data = node->ToElement()->GetText();
-//            cout << "Data 1 is: " << data << endl;
-//            TreeNode<Type> *prev = new TreeNode<Type>("General", key, data);
-//            int key2 = stoi(node->NextSibling()->ToElement()->Attribute("key"));
-//            Type data2 = node->ToElement()->GetText();
-//            TreeNode<Type> *cur = new TreeNode<Type>("General", key2, data2);
-//            // Create linked list of siblings
-//            prev->setSibling(cur);
-//            node = node->NextSibling();
-//        }
-//        cout << "End of while loop reached" << endl;
-//    }
-
-    void clear() {
-        cout << "Clear implemented" << endl;
-
-    }
-
-    void display() {
-        // Breadth First Traversal
-        cout << root->getValue() << endl;
-        for (int i = 1; i <= parentSize; i++) {
-            cout << array[i][0]->getValue() << " ";
+        string filename = "generalTree.xml";
+        TiXmlDocument doc(filename);
+        bool loadOkay = doc.LoadFile();
+        if (!loadOkay) {
+            cout << "Could not load file " << filename << endl;
+            cout << "Error='" << doc.ErrorDesc() << "'. Exiting.\n";
         }
-        cout << endl;
-        for (int i = 1; i <= parentSize; i++) {
-            for (int j = 1; j <= childSize; j++) {
-                cout << array[i][j]->getValue() << " ";
+        TiXmlNode *generalTreeNode = doc.FirstChild("GeneralTree");
+        assert(generalTreeNode != 0);
+
+        TiXmlNode *rootNode = generalTreeNode->FirstChild();
+        assert(rootNode != 0);
+        int key = stoi(rootNode->ToElement()->Attribute("key"));
+        Type data = rootNode->ToElement()->GetText();
+        root = new TreeNode<Type>("General", key, data);
+        // Populating the rest of the tree via recursive function
+        recFunction(rootNode);
+    }
+
+    void recFunction(TiXmlNode *node) {
+        if (node->FirstChildElement() == NULL) {
+            cout << "First child element is null" << endl;
+            // Do something
+        } else {
+            int key = stoi(node->ToElement()->Attribute("key"));
+            Type data = node->ToElement()->GetText();
+            TreeNode<Type> *treeNode = new TreeNode<Type>("General", key, data);
+            cout << "Right BEFORE recursive activates" << endl;
+            return recFunction(node->FirstChild());
+        }
+        cout << "After recursiveness done" << endl;
+        // After recursiveness is finished
+        while (node->NextSibling() != NULL) {
+            // Converting XML node to TreeNode
+            // Making previous and current nodes
+            cout << "DOING NODE TO ELEMENT" << endl;
+            cout << node->ToText()->Value() << endl;
+            cout << node->ToElement()->Attribute("key") << endl;
+            cout << "DONE WITH NODE TO ELEMENT" << endl;
+            int key = stoi(node->ToElement()->Attribute("key"));
+            cout << "Key 1 is: " << key << endl;
+            Type data = node->ToElement()->GetText();
+            cout << "Data 1 is: " << data << endl;
+            TreeNode<Type> *prev = new TreeNode<Type>("General", key, data);
+            int key2 = stoi(node->NextSibling()->ToElement()->Attribute("key"));
+            Type data2 = node->ToElement()->GetText();
+            TreeNode<Type> *cur = new TreeNode<Type>("General", key2, data2);
+            // Create linked list of siblings
+            prev->setSibling(cur);
+            node = node->NextSibling();
+        }
+    }
+
+        void clear() {
+            TreeNode<Type> *temp;
+            TreeNode<Type> *traverse = root->getChildren();
+            while (traverse != NULL) {
+                temp = traverse;
+                traverse = traverse->getChildren();
+                delete temp;
             }
         }
 
-    }
-
-    // Can use as many parameters as we need here
-    void insert(int head, int parent, int child, Type data) {
-        TreeNode<Type> *node = new TreeNode<Type>("General", data);
-        TreeNode<Type> *ptr = root;
-        if (head == 0 && parent == 0 && child == 0) { //Checks if root
-            cout << "Creating root." << endl;
-            root = node;
-            size++;
-        }
-        else {
-            if (child == 0) {
-                array[parent][child] = node; //Sets parent node
+        void insert(TreeNode<Type> *data, int parentNodeKey) {
+            if (!root) {
+                root = data;
                 size++;
-                parentSize++;
+                return;
             }
-            else {
-                array[parent][child] = node;
-                size++;
-                if (child > childSize) {
-                    childSize = child;
+            TreeNode<Type> *parentNode = findNode(parentNodeKey, root);
+            if (!parentNode) {
+                cout << "Parent node is null, key of parent node could not be found" << endl;
+                return;
+            }
+            if (!parentNode->getChildren()) {
+                // Parent node is null, can just set children
+                parentNode->setChildren(data);
+            } else {
+                TreeNode<Type> *temp = parentNode->getChildren();
+                while (temp->getSibling()) {
+                    temp = temp->getSibling();
                 }
+                temp->setSibling(data);
+                cout << "Clear implemented" << endl;
 
             }
         }
-    }
 
-    void del(TreeNode<Type> *data) {
-        cout << "Delete implemented" << endl;
-    }
-
+        void del(TreeNode<Type> *data) {
+            TreeNode<Type> *node = findNode(data->getKey(), root);
+            if (!node) {
+                cout << "Couldn't find the node" << endl;
+                return;
+            }
+            delete node;
+        }
 };
