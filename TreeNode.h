@@ -61,18 +61,15 @@ public:
             this->value = value;
             this->children = nullptr;
             this->sibling = nullptr;
-        }
-        else if(treeType == "Heap"){
+        } else if(treeType == "Heap"){
             this->key = 0;
             this->value = value;
-        }
-        else if(treeType == "AVL"){
+        } else if(treeType == "AVL"){
             this->key = 0;
             this->value = value;
             this->left = nullptr;
             this->right = nullptr;
-        }
-        else{
+        } else{
             cout << "Node could not be created. Try again." << endl;
         }
     }

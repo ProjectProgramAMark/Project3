@@ -19,12 +19,9 @@ private:
 public:
     GeneralTree() {
         size = 0;
-        // Idk what buildTree is doing, so I'm just going
-        // to make a dummy constructor that builds a tree so the
-        // rest of the functions can be done
-
-        root = new TreeNode<Type>("General", 1, "Genres");
-        TreeNode<string> *node = new TreeNode<string>("General", 2, "Thriller");
+        TreeNode<string> *node = new TreeNode<Type>("General", 1, "Genres");
+        insert(node, 0);
+        node = new TreeNode<string>("General", 2, "Thriller");
         insert(node, 1);
         node = new TreeNode<string>("General", 6, "Goodnight Mommy");
         insert(node, 2);
@@ -42,6 +39,7 @@ public:
         insert(node, 1);
         node = new TreeNode<string>("General", 10, "Pokemon 2000: The Movie");
         insert(node, 5);
+//        display(root);
     }
 
     GeneralTree(string stuff) : size(0), root(NULL), height(0) {
@@ -144,10 +142,11 @@ public:
             } else if (node->getSibling()) {
                 return findNode(key, node->getSibling());
             } else {
-                cout << "Done traversing" << endl;
+//                cout << "Done traversing" << endl;
             }
         }
-        cout << "Node not found" << endl;
+//        cout << "Node not found" << endl;
+        return NULL;
     }
 
     TreeNode<Type> *findNode(int key) {
@@ -265,47 +264,72 @@ public:
         }
     }
 
-        void clear() {
-            TreeNode<Type> *temp;
-            TreeNode<Type> *traverse = root->getChildren();
-            while (traverse != NULL) {
-                temp = traverse;
-                traverse = traverse->getChildren();
-                delete temp;
-            }
+    void clear() {
+        TreeNode<Type> *temp;
+        TreeNode<Type> *traverse = root->getChildren();
+        while (traverse != NULL) {
+            temp = traverse;
+            traverse = traverse->getChildren();
+            delete temp;
         }
+    }
 
-        void insert(TreeNode<Type> *data, int parentNodeKey) {
-            if (!root) {
-                root = data;
-                size++;
-                return;
+    void insert(TreeNode<Type> *data, int parentNodeKey) {
+        if (!root) {
+            root = data;
+            size++;
+            return;
+        }
+        TreeNode<Type> *parentNode = findNode(parentNodeKey, root);
+        if (!parentNode) {
+//            cout << "Parent node is null, key of parent node could not be found" << endl;
+            return;
+        }
+        if (!parentNode->getChildren()) {
+            // Parent node is null, can just set children
+            parentNode->setChildren(data);
+        } else {
+            TreeNode<Type> *temp = parentNode->getChildren();
+            while (temp->getSibling()) {
+                temp = temp->getSibling();
             }
-            TreeNode<Type> *parentNode = findNode(parentNodeKey, root);
-            if (!parentNode) {
-                cout << "Parent node is null, key of parent node could not be found" << endl;
+            temp->setSibling(data);
+//            cout << "Find Node implemented" << endl;
+
+        }
+    }
+
+    void display(TreeNode<Type> *node) {
+        //level order traversal of tree
+        queue<TreeNode<Type>, deque<TreeNode<Type>, allocator<TreeNode<Type>>>> *queue =
+                new ::queue<TreeNode<Type>, deque<TreeNode<Type>, allocator<TreeNode<Type>>>>();
+        queue->push(*node);
+        int level = 0;
+        while (1) {
+            int nodeCount = (int) queue->size();
+            if (nodeCount == 0)
                 return;
-            }
-            if (!parentNode->getChildren()) {
-                // Parent node is null, can just set children
-                parentNode->setChildren(data);
-            } else {
-                TreeNode<Type> *temp = parentNode->getChildren();
-                while (temp->getSibling()) {
-                    temp = temp->getSibling();
+            level++;
+            while (nodeCount > 0) {
+                TreeNode<Type> temp = queue->front();
+                queue->pop();
+                cout << temp.getValue() << " ";
+                for (int i = 1; i <= temp.getKey(); i++) {
+                    if (temp.getChildren() != NULL)
+                        queue->push(*temp.getChildren());
                 }
-                temp->setSibling(data);
-                cout << "Clear implemented" << endl;
-
+                nodeCount--;
             }
+            cout << endl;
         }
+    }
 
-        void del(TreeNode<Type> *data) {
-            TreeNode<Type> *node = findNode(data->getKey(), root);
-            if (!node) {
-                cout << "Couldn't find the node" << endl;
-                return;
-            }
-            delete node;
+    void del(TreeNode<Type> *data) {
+        TreeNode<Type> *node = findNode(data->getKey(), root);
+        if (!node) {
+//            cout << "Couldn't find the node" << endl;
+            return;
         }
+        delete node;
+    }
 };
