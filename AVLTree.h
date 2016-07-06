@@ -600,7 +600,7 @@ public:
 //    void buildTree() {
 //        vector<TreeNode<Type> *> *vec = new vector<TreeNode<Type> *>();
 //        string line;
-//        ifstream myfile("tree.txt");
+//        ifstream myfile("avltree.txt");
 //        int cnt = 0;
 //        if (myfile.is_open()) {
 //            int key;

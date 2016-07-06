@@ -52,7 +52,7 @@ public:
         ifstream file;
         int key;
         string value, input;
-        file.open("/home/randomguy/ClionProjects/Project3/HeapExample.txt");
+        file.open("HeapExample.txt");
         if (file.is_open()) {
             cout << "File Opened." << endl;
         }
