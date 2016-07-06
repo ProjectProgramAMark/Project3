@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<GeneralTree>
+    <Node key="1"> Genres
+        <Node key="2"> Thriller
+            <Node key="6"> Goodnight Mommy</Node>
+        </Node>
+        <Node key="3"> Action</Node>
+        <Node key="4"> Romance
+            <Node key="7"> A Walk To Remember</Node>
+            <Node key="8"> The Notebook</Node>
+            <Node key="9"> Safe Haven</Node>
+        </Node>
+        <Node key="5"> Anime
+            <Node key="9"> Full Metal Alchemist</Node>
+            <Node key="10"> Pokemon 2000: The Movie</Node>
+        </Node>
+    </Node>
+</GeneralTree>
